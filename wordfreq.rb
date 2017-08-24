@@ -1,7 +1,7 @@
 require 'pry'
 class Wordfreq
   STOP_WORDS = ['a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from',
-    'has', 'he', 'i', 'in', 'is', 'it', 'its', 'of', 'on', 'that', 'the', 'to',
+    'has', 'he', 'she', 'i', 'in', 'is', 'it', 'its', 'of', 'on', 'that', 'the', 'to',
     'were', 'will', 'with']
 
   def initialize(filename)
@@ -22,7 +22,11 @@ class Wordfreq
   end
 
   def top_words(number)
-    @j.sort{|a, b| b[1]<=>a[1]}.take(number)
+    ten = @j.sort{|a, b| b[1]<=>a[1]}
+    eleven = ten.sort_by do |key, value|
+      value
+    end
+    ten.take(number)
   end
 
   def print_report
