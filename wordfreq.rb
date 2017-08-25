@@ -1,7 +1,7 @@
 require 'pry'
 class Wordfreq
   STOP_WORDS = ['a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from',
-    'has', 'he', 'she', 'i', 'in', 'is', 'it', 'its', 'of', 'on', 'that', 'the', 'to',
+    'has', 'he', 'i', 'in', 'is', 'it', 'its', 'of', 'on', 'that', 'the', 'to',
     'were', 'will', 'with']
 
   def initialize(filename)
@@ -13,23 +13,25 @@ class Wordfreq
   end
 
   def frequency(word)
-    @j[word]
+    if @j[word] == nil
+      0
+    else
+      @j[word]
+    end
   end
 
   def frequencies
-    #binding.pry
-
+    @j
   end
 
   def top_words(number)
-    ten = @j.sort{|a, b| b[1]<=>a[1]}
-    eleven = ten.sort_by do |key, value|
-      value
-    end
-    ten.take(number)
+    @j.sort { |a, b| [b[1], a[0]] <=> [a[1], b[0]] }[0..(number - 1)]
   end
 
   def print_report
+    top_words(10).each do |x, y|
+      puts "#{x} |".rjust(9) + " #{y} ".ljust(4) + "*" * @doc.count(x)
+    end
   end
 end
 
