@@ -6,26 +6,26 @@ class Wordfreq
 
   def initialize(filename)
     @doc = File.read(filename).downcase.gsub(/\W/, ' ').split(" ").reject{ |e| STOP_WORDS.include? e}
-    @j = Hash.new
+    @doc_hash = Hash.new
     @doc.uniq.each do |x|
-      @j["#{x}"] = @doc.count(x)
+      @doc_hash["#{x}"] = @doc.count(x)
     end
   end
 
   def frequency(word)
-    if @j[word] == nil
+    if @doc_hash[word] == nil
       0
     else
-      @j[word]
+      @doc_hash[word]
     end
   end
 
   def frequencies
-    @j
+    @doc_hash
   end
 
   def top_words(number)
-    @j.sort { |a, b| [b[1], a[0]] <=> [a[1], b[0]] }[0..(number - 1)]
+    @doc_hash.sort { |a, b| [b[1], a[0]] <=> [a[1], b[0]] }[0..(number - 1)]
   end
 
   def print_report
